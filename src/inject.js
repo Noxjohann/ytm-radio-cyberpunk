@@ -207,8 +207,6 @@
   // "RDAMVM" + the video id; opening that watch address starts it. The page reloads, which is why autoplay is
   // remembered (sessionStorage) and played again after the reload.
   const VIDEO_ID = /^[A-Za-z0-9_-]{6,20}$/;
-  const MIX_KEY = 'ytmRadioMixAt';
-  const MIX_COOLDOWN_SECS = 15;
 
   // The id of the song that is playing. The address bar only has it ("watch?v=") while the now-playing screen is
   // open, so the player itself is asked first; the address and the queue are fallbacks. Returns { id, how } or null.
@@ -235,22 +233,6 @@
       return;
     }
     const id = found.id;
-
-    // A second press must not start another mix: ignore it while a mix is still starting (the page is reloading;
-    // the time is kept in sessionStorage so it survives the reload) and while a mix is already playing (its
-    // address has list=RDAMVM...).
-    let lastMix = 0;
-    try { lastMix = Number(sessionStorage.getItem(MIX_KEY)) || 0; } catch (e) { /* ignore */ }
-    if (Date.now() - lastMix < MIX_COOLDOWN_SECS * 1000) {
-      post('L:mix ignored: one was started less than ' + MIX_COOLDOWN_SECS + ' s ago');
-      return;
-    }
-    const playlist = new URLSearchParams(location.search).get('list') || '';
-    if (playlist.startsWith('RDAMVM')) {
-      post('L:mix ignored: a mix is already playing');
-      return;
-    }
-    try { sessionStorage.setItem(MIX_KEY, String(Date.now())); } catch (e) { /* ignore */ }
     post('L:mix: song id taken from the ' + found.how + '; beforeunload patch ' + unloadPatch + ', ' + unloadBlocked +
       ' page handler(s) blocked so far');
     try { sessionStorage.setItem(AUTOPLAY_KEY, String(Date.now())); } catch (e) { /* ignore */ }
