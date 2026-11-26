@@ -19,4 +19,4 @@ licence does not change them; see red4ext/plugins/SpotOnRadio/THIRD-PARTY-NOTICE
 
 ---
 This file is the licence of the Spot On Radio code that YTM Radio is based on (the MP3 stream server in
-src/stream.rs and the RadioExt keep-alive logic in the CET mod). YTM Radio is based on Spot On Radio by Sz4bcsi.
+src/stream.rs and the RadioExt keep-alive logic in the CET mod). YTM Radio is based on Spot On Radio 1.4.0 by Sz4bcsi.

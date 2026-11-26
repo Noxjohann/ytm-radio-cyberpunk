@@ -3,6 +3,7 @@ name: build
 on:
   push:
     branches: [main]
+    tags: ['v*']      # a tag like v0.1.0 also publishes a GitHub Release with the zip
   workflow_dispatch:
 
 permissions:
@@ -54,13 +55,27 @@ jobs:
           Copy-Item -Recurse dist/* package/
           $mod = "package/bin/x64/plugins/cyber_engine_tweaks/mods/YtmRadio"
           Copy-Item target/release/ytm-radio.exe "$mod/ytm-radio.exe"
-          Copy-Item README.md, LICENSE-SpotOnRadio.txt, THIRD-PARTY-NOTICES.txt package/
+          Copy-Item README.md, LICENSE, LICENSE-SpotOnRadio.txt, THIRD-PARTY-NOTICES.txt package/
 
       - uses: actions/upload-artifact@v4
         if: steps.build.outcome == 'success'
         with:
           name: ytm-radio
           path: package
+
+      - name: Zip for the release
+        if: steps.build.outcome == 'success' && startsWith(github.ref, 'refs/tags/v')
+        shell: pwsh
+        run: Compress-Archive -Path package/* -DestinationPath "YtmRadio-${{ github.ref_name }}.zip"
+
+      - name: Create the GitHub Release
+        if: steps.build.outcome == 'success' && startsWith(github.ref, 'refs/tags/v')
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "${GITHUB_REF_NAME}" "YtmRadio-${GITHUB_REF_NAME}.zip" \
+            --title "YTM Radio ${GITHUB_REF_NAME}" --notes-file RELEASE_NOTES.md
 
       - name: Fail the run if the build failed
         if: steps.build.outcome != 'success'
