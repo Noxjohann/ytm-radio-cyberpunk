@@ -236,17 +236,18 @@
     }
     const id = found.id;
 
-    // A second press must not start the same thing again: ignore it while a mix is still starting (the page is
-    // reloading), and when this song is already the start of its own mix. The time is kept in sessionStorage so it
-    // survives the reload.
+    // A second press must not start another mix: ignore it while a mix is still starting (the page is reloading;
+    // the time is kept in sessionStorage so it survives the reload) and while a mix is already playing (its
+    // address has list=RDAMVM...).
     let lastMix = 0;
     try { lastMix = Number(sessionStorage.getItem(MIX_KEY)) || 0; } catch (e) { /* ignore */ }
     if (Date.now() - lastMix < MIX_COOLDOWN_SECS * 1000) {
       post('L:mix ignored: one was started less than ' + MIX_COOLDOWN_SECS + ' s ago');
       return;
     }
-    if (new URLSearchParams(location.search).get('list') === 'RDAMVM' + id) {
-      post('L:mix ignored: this song is already the start of its own mix');
+    const playlist = new URLSearchParams(location.search).get('list') || '';
+    if (playlist.startsWith('RDAMVM')) {
+      post('L:mix ignored: a mix is already playing');
       return;
     }
     try { sessionStorage.setItem(MIX_KEY, String(Date.now())); } catch (e) { /* ignore */ }
