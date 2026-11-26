@@ -18,6 +18,18 @@
     try { window.ipc.postMessage(s); } catch (e) { /* app not listening: ignore */ }
   };
 
+  // While a song plays YouTube Music asks "Leave site?" (a beforeunload handler) before the page may reload, which
+  // would hold up the mix reload with a dialog nobody sees in the game. This runs before the page's own scripts, so
+  // their beforeunload handlers are simply never registered. (The app window closes through the app, not the page.)
+  try {
+    const realAdd = EventTarget.prototype.addEventListener;
+    EventTarget.prototype.addEventListener = function (type, listener, options) {
+      if (type === 'beforeunload') return undefined;
+      return realAdd.call(this, type, listener, options);
+    };
+    Object.defineProperty(window, 'onbeforeunload', { get: () => null, set: () => {}, configurable: true });
+  } catch (e) { /* cannot patch here: the dialog may appear, nothing else breaks */ }
+
   // ------------------------------------------------------------ loudness leveler
   // Songs on YouTube Music differ a lot in loudness. The leveler measures how loud the music is (RMS, followed
   // slowly) and moves one gain towards the level LEVEL_TARGET_RMS, so every song lands at about the same loudness.
