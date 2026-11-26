@@ -21,14 +21,23 @@
   // While a song plays YouTube Music asks "Leave site?" (a beforeunload handler) before the page may reload, which
   // would hold up the mix reload with a dialog nobody sees in the game. This runs before the page's own scripts, so
   // their beforeunload handlers are simply never registered. (The app window closes through the app, not the page.)
+  let unloadPatch = 'not applied';
+  let unloadBlocked = 0;
   try {
     const realAdd = EventTarget.prototype.addEventListener;
     EventTarget.prototype.addEventListener = function (type, listener, options) {
-      if (type === 'beforeunload') return undefined;
+      if (type === 'beforeunload') { unloadBlocked++; return undefined; }
       return realAdd.call(this, type, listener, options);
     };
-    Object.defineProperty(window, 'onbeforeunload', { get: () => null, set: () => {}, configurable: true });
-  } catch (e) { /* cannot patch here: the dialog may appear, nothing else breaks */ }
+    Object.defineProperty(window, 'onbeforeunload', {
+      get: () => null,
+      set: (v) => { if (v) unloadBlocked++; },
+      configurable: true,
+    });
+    unloadPatch = 'active';
+  } catch (e) {
+    unloadPatch = 'failed: ' + e; // the dialog may appear, nothing else breaks
+  }
 
   // ------------------------------------------------------------ loudness leveler
   // Songs on YouTube Music differ a lot in loudness. The leveler measures how loud the music is (RMS, followed
@@ -224,7 +233,8 @@
       return;
     }
     const id = found.id;
-    post('L:mix: song id taken from the ' + found.how);
+    post('L:mix: song id taken from the ' + found.how + '; beforeunload patch ' + unloadPatch + ', ' + unloadBlocked +
+      ' page handler(s) blocked so far');
     try { sessionStorage.setItem(AUTOPLAY_KEY, String(Date.now())); } catch (e) { /* ignore */ }
     post('L:starting a mix from ' + id);
     location.assign('https://music.youtube.com/watch?v=' + id + '&list=RDAMVM' + id);

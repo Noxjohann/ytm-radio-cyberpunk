@@ -191,7 +191,7 @@ fn main() {
     let dir = exe_dir();
     init_logger(&dir);
     std::panic::set_hook(Box::new(|info| log::error!("panic: {info}")));
-    log::info!("YTM Radio starting");
+    log::info!("YTM Radio starting (build {})", option_env!("GITHUB_SHA").map_or("local", |s| &s[..s.len().min(7)]));
 
     let (pcm, addr) = stream::start(STREAM_ADDR);
     let stream_down = addr.is_none();
