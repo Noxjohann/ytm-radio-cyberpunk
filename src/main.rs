@@ -26,14 +26,15 @@ use tao::dpi::LogicalSize;
 use tao::event::{Event, WindowEvent};
 use tao::event_loop::{ControlFlow, EventLoopBuilder, EventLoopProxy};
 use tao::window::WindowBuilder;
-use wry::{WebContext, WebViewBuilder};
+use wry::{WebContext, WebViewBuilder, WebViewBuilderExtWindows};
 
 /// Must match streamInfo.streamURL in the RadioExt station's metadata.json and STREAM_URL in the CET mod.
 const STREAM_ADDR: (&str, u16) = ("127.0.0.1", 52848);
 const START_URL: &str = "https://music.youtube.com";
 const INJECT: &str = include_str!("inject.js");
 /// The only commands the game may send (checked before anything is run in the page).
-const COMMANDS: [&str; 5] = ["next", "prev", "toggle", "pause", "play"];
+/// `mix` starts a song mix from the track that is playing; `levelon` / `leveloff` switch the loudness leveler.
+const COMMANDS: [&str; 8] = ["next", "prev", "toggle", "pause", "play", "mix", "levelon", "leveloff"];
 
 enum UserEvent {
     Eval(String),
@@ -45,6 +46,8 @@ struct Song {
     artist: String,
     album: String,
     playing: bool,
+    /// The loudness leveler in the page is on.
+    leveling: bool,
     /// Increases whenever the song changes; the CET mod announces each value once.
     seq: u64,
 }
@@ -120,6 +123,7 @@ fn handle_ipc(body: &str, pcm: &stream::Pcm, song: &Mutex<Song>) {
         s.artist = artist;
         s.album = album;
         s.playing = v.get("p").and_then(serde_json::Value::as_bool).unwrap_or(false);
+        s.leveling = v.get("lv").and_then(serde_json::Value::as_bool).unwrap_or(false);
     } else if let Some(text) = body.strip_prefix("L:") {
         log::info!("page: {text}");
     }
@@ -131,11 +135,12 @@ fn clean(s: &str) -> String {
     s.replace(['\t', '\r', '\n'], " ")
 }
 
-/// `v1 playing seq title artist album clients stream_down tick` (tab separated). `tick` grows every write, so the
-/// CET mod can tell that this app is still running.
+/// `v1 playing seq title artist album clients stream_down tick leveling` (tab separated). `tick` grows every write, so
+/// the CET mod can tell that this app is still running. `leveling` (last field) was added later; the CET mod accepts
+/// a line without it.
 fn write_state(dir: &Path, song: &Song, clients: usize, stream_down: bool, tick: u64) {
     let line = format!(
-        "v1\t{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}",
+        "v1\t{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}",
         u8::from(song.playing),
         song.seq,
         clean(&song.title),
@@ -143,7 +148,8 @@ fn write_state(dir: &Path, song: &Song, clients: usize, stream_down: bool, tick:
         clean(&song.album),
         clients,
         u8::from(stream_down),
-        tick
+        tick,
+        u8::from(song.leveling)
     );
     // Written next to the target and renamed, so the game never reads half a line. A failed rename (the game has
     // the file open at that very moment) is simply tried again half a second later.
@@ -227,6 +233,8 @@ fn main() {
 
     let (ipc_pcm, ipc_song) = (pcm.clone(), song.clone());
     let webview = WebViewBuilder::with_web_context(&mut web_context)
+        // A mix reloads the page; without this the reloaded page may refuse to start playing without a click.
+        .with_additional_browser_args("--autoplay-policy=no-user-gesture-required")
         .with_url(START_URL)
         .with_initialization_script(INJECT)
         .with_ipc_handler(move |req| handle_ipc(req.body(), &ipc_pcm, &ipc_song))

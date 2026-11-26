@@ -1,6 +1,6 @@
 -- YTM Radio: CET side. Talks to ytm-radio.exe (it lives in this same folder) through two small files:
 --   state.txt  written by the app every 0.5 s: what is playing, whether the stream is connected
---   cmd.txt    written by this mod: next / prev / toggle / pause / play
+--   cmd.txt    written by this mod: next / prev / toggle / pause / play / mix / levelon / leveloff
 -- (CET can only read and write files inside its own mod folder, which is why the app sits here.)
 --
 -- Based on Spot On Radio by Sz4bcsi (SZ4), see LICENSE-SpotOnRadio.txt. The RadioExt handling below (song name in the
@@ -71,7 +71,8 @@ local function split(s, sep)
     end
 end
 
--- state.txt: v1 playing seq title artist album clients stream_down tick (tab separated)
+-- state.txt: v1 playing seq title artist album clients stream_down tick leveling (tab separated; the last field is
+-- missing when the app is an older version)
 function Radio.parseState(line)
     if type(line) ~= 'string' then return nil end
     line = string.gsub(line, '[\r\n]+$', '')
@@ -80,7 +81,16 @@ function Radio.parseState(line)
     return {
         playing = f[2] == '1', seq = tonumber(f[3]) or 0, title = f[4], artist = f[5], album = f[6],
         clients = tonumber(f[7]) or 0, streamDown = f[8] == '1', tick = tonumber(f[9]) or 0,
+        leveling = f[10] == '1',
     }
+end
+
+-- The loudness leveler switch: shown as the app reports it, except for a moment after a click (the app needs about a
+-- second to report the new value, and the checkbox must not jump back meanwhile).
+function Radio.levelingShown(st)
+    local o = Radio.levelOverride
+    if o and Radio.uptime - o.at < 3 then return o.value end
+    return st.leveling
 end
 
 function Radio.shouldPause(f)
@@ -120,6 +130,11 @@ end
 local function sendCmd(name)
     Radio.cmdCounter = Radio.cmdCounter + 1
     writeFile('cmd.txt', string.format('%d:%.3f:%s', Radio.cmdCounter, Radio.uptime, name))
+end
+
+function Radio.setLeveling(value)
+    Radio.levelOverride = { value = value, at = Radio.uptime }
+    sendCmd(value and 'levelon' or 'leveloff')
 end
 
 -- ---------------------------------------------------------------- game side
@@ -486,7 +501,12 @@ function Radio.draw()
     if ImGui.Button(st.playing and '  Pause  ##pp' or '  Play  ##pp') then sendCmd('toggle') end
     ImGui.SameLine()
     if ImGui.Button('  >|  ##next') then sendCmd('next') end
+    ImGui.SameLine()
+    if ImGui.Button('  Mix  ##mix') then sendCmd('mix') end
+    ImGui.TextWrapped('Mix: starts a mix (radio) from the song that is playing. The player page reloads and playback resumes.')
 
+    local lv, lvPressed = ImGui.Checkbox('Even out the loudness between songs', Radio.levelingShown(st))
+    if lvPressed then Radio.setLeveling(lv) end
     ImGui.Text("Volume: use the game's radio volume slider")
     local boost, moved = ImGui.DragInt('Loudness boost', Radio.boost, 1, BOOST_MIN, BOOST_MAX, '%d%%')
     if moved then Radio.setBoost(boost) end
@@ -499,6 +519,7 @@ end
 registerInput('ytm_playpause', 'YTM Radio: Play / Pause', function(down) if down then sendCmd('toggle') end end)
 registerInput('ytm_next', 'YTM Radio: Next track', function(down) if down then sendCmd('next') end end)
 registerInput('ytm_prev', 'YTM Radio: Previous track', function(down) if down then sendCmd('prev') end end)
+registerInput('ytm_mix', 'YTM Radio: Start a mix from this song', function(down) if down then sendCmd('mix') end end)
 
 registerForEvent('onInit', function()
     Radio.loadBoost()

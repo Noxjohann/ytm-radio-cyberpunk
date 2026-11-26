@@ -24,3 +24,10 @@ You get:
 
 The sound of the page does not come out of your speakers; it only plays through the game's radio.
 Logs: `ytm-radio.log` next to the exe.
+
+## Extras
+- **Mix button** (CET window, or a hotkey set in CET > Bindings): starts YouTube Music's song mix from the track that is
+  playing, so you never need to switch to the player window. The player page reloads and playback starts again by itself.
+- **Even out the loudness between songs** (CET window, on by default): a leveler in the player page measures how loud
+  the music is and brings every song to about the same level, with a soft limiter so boosted peaks do not clip. The
+  numbers are at the top of `src/inject.js` (`LEVEL_TARGET_RMS` and friends). Your choice is remembered.
