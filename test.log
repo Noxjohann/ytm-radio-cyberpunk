@@ -1,0 +1,222 @@
+    Updating crates.io index
+     Locking 297 packages to highest compatible versions
+      Adding base64 v0.22.1 (available: v0.23.1)
+      Adding generic-array v0.14.7 (available: v0.14.9)
+      Adding shine-rs v0.1.5 (available: v0.1.6)
+      Adding tao v0.31.1 (available: v0.38.0)
+      Adding toml v0.8.2 (available: v0.8.23)
+      Adding toml_datetime v0.6.3 (available: v0.6.11)
+      Adding toml_edit v0.20.2 (available: v0.20.7)
+      Adding webkit2gtk v2.0.1 (available: v2.0.2)
+      Adding webkit2gtk-sys v2.0.1 (available: v2.0.2)
+      Adding wry v0.48.1 (available: v0.58.2)
+ Downloading crates ...
+  Downloaded itoa v1.0.19
+  Downloaded version_check v0.9.5
+  Downloaded form_urlencoded v1.2.3
+  Downloaded idna_adapter v1.2.2
+  Downloaded yoke-derive v0.8.4
+  Downloaded utf8_iter v1.1.0
+  Downloaded windows-link v0.2.1
+  Downloaded potential_utf v0.1.6
+  Downloaded windows-targets v0.52.6
+  Downloaded displaydoc v0.2.7
+  Downloaded lock_api v0.4.14
+  Downloaded zerofrom v0.1.8
+  Downloaded num-conv v0.2.2
+  Downloaded percent-encoding v2.3.2
+  Downloaded time-core v0.1.9
+  Downloaded windows-strings v0.1.0
+  Downloaded scopeguard v1.2.0
+  Downloaded dpi v0.1.2
+  Downloaded windows-implement v0.58.0
+  Downloaded windows-version v0.1.7
+  Downloaded windows-interface v0.58.0
+  Downloaded webview2-com-macros v0.8.1
+  Downloaded cfg-if v1.0.5
+  Downloaded lazy_static v1.5.1
+  Downloaded stable_deref_trait v1.2.1
+  Downloaded zerofrom-derive v0.1.8
+  Downloaded windows-result v0.2.0
+  Downloaded dunce v1.0.5
+  Downloaded thiserror v1.0.69
+  Downloaded thiserror-impl v2.0.21
+  Downloaded deranged v0.5.9
+  Downloaded writeable v0.6.4
+  Downloaded zmij v1.0.23
+  Downloaded utf_types v1.0.0
+  Downloaded powerfmt v0.2.1
+  Downloaded synstructure v0.14.0
+  Downloaded tinystr v0.8.5
+  Downloaded thiserror-impl v1.0.69
+  Downloaded raw-window-handle v0.6.2
+  Downloaded thiserror v2.0.21
+  Downloaded parking_lot v0.12.5
+  Downloaded log v0.4.35
+  Downloaded webview2-com v0.34.0
+  Downloaded windows-core v0.58.0
+  Downloaded unicode-ident v1.0.27
+  Downloaded smallvec v1.16.6
+  Downloaded cookie v0.18.3
+  Downloaded yoke v0.8.4
+  Downloaded zerovec-derive v0.11.7
+  Downloaded litemap v0.8.3
+  Downloaded once_cell v1.21.4
+  Downloaded parking_lot_core v0.9.12
+  Downloaded crossbeam-utils v0.8.23
+  Downloaded quote v1.0.47
+  Downloaded icu_provider v2.4.0
+  Downloaded proc-macro2 v1.0.107
+  Downloaded time-macros v0.2.32
+  Downloaded hound v3.5.1
+  Downloaded serde_core v1.0.229
+  Downloaded base64 v0.22.1
+  Downloaded bytes v1.12.2
+  Downloaded icu_locale_core v2.4.0
+  Downloaded icu_normalizer_data v2.4.0
+  Downloaded bitflags v2.13.2
+  Downloaded serde v1.0.229
+  Downloaded crossbeam-channel v0.5.17
+  Downloaded shine-rs v0.1.5
+  Downloaded url v2.5.9
+  Downloaded icu_collections v2.4.0
+  Downloaded memchr v2.8.3
+  Downloaded zerotrie v0.2.5
+  Downloaded unicode-segmentation v1.13.3
+  Downloaded http v1.5.0
+  Downloaded zerovec v0.11.9
+  Downloaded icu_properties v2.4.0
+  Downloaded idna v1.1.0
+  Downloaded serde_json v1.0.154
+  Downloaded icu_properties_data v2.4.0
+  Downloaded wry v0.48.1
+  Downloaded syn v2.0.119
+  Downloaded syn v3.0.10
+  Downloaded time v0.3.55
+  Downloaded icu_normalizer v2.4.0
+  Downloaded windows_x86_64_msvc v0.52.6
+  Downloaded libc v0.2.191
+  Downloaded tao v0.31.1
+  Downloaded windows v0.58.0
+  Downloaded webview2-com-sys v0.34.0
+   Compiling proc-macro2 v1.0.107
+   Compiling quote v1.0.47
+   Compiling unicode-ident v1.0.27
+   Compiling stable_deref_trait v1.2.1
+   Compiling windows_x86_64_msvc v0.52.6
+   Compiling thiserror v1.0.69
+   Compiling writeable v0.6.4
+   Compiling utf_types v1.0.0
+   Compiling windows-targets v0.52.6
+   Compiling litemap v0.8.3
+   Compiling utf8_iter v1.1.0
+   Compiling windows-result v0.2.0
+   Compiling icu_properties_data v2.4.0
+   Compiling icu_normalizer_data v2.4.0
+   Compiling smallvec v1.16.6
+   Compiling windows-strings v0.1.0
+   Compiling windows-link v0.2.1
+   Compiling num-conv v0.2.2
+   Compiling version_check v0.9.5
+   Compiling time-core v0.1.9
+   Compiling parking_lot_core v0.9.12
+   Compiling crossbeam-utils v0.8.23
+   Compiling cookie v0.18.3
+   Compiling time-macros v0.2.32
+   Compiling syn v3.0.10
+   Compiling syn v2.0.119
+   Compiling serde_core v1.0.229
+   Compiling deranged v0.5.9
+   Compiling zmij v1.0.23
+   Compiling thiserror v2.0.21
+   Compiling itoa v1.0.19
+   Compiling libc v0.2.191
+   Compiling scopeguard v1.2.0
+   Compiling synstructure v0.14.0
+   Compiling percent-encoding v2.3.2
+   Compiling powerfmt v0.2.1
+   Compiling cfg-if v1.0.5
+   Compiling time v0.3.55
+   Compiling form_urlencoded v1.2.3
+   Compiling zerofrom-derive v0.1.8
+   Compiling yoke-derive v0.8.4
+   Compiling zerovec-derive v0.11.7
+   Compiling displaydoc v0.2.7
+   Compiling zerofrom v0.1.8
+   Compiling yoke v0.8.4
+   Compiling thiserror-impl v1.0.69
+   Compiling zerotrie v0.2.5
+   Compiling zerovec v0.11.9
+   Compiling windows-implement v0.58.0
+   Compiling tinystr v0.8.5
+   Compiling potential_utf v0.1.6
+   Compiling icu_locale_core v2.4.0
+   Compiling icu_collections v2.4.0
+   Compiling windows-interface v0.58.0
+   Compiling webview2-com-sys v0.34.0
+   Compiling webview2-com-macros v0.8.1
+   Compiling windows-core v0.58.0
+   Compiling thiserror-impl v2.0.21
+   Compiling lock_api v0.4.14
+   Compiling icu_provider v2.4.0
+   Compiling icu_properties v2.4.0
+   Compiling icu_normalizer v2.4.0
+   Compiling windows v0.58.0
+   Compiling windows-version v0.1.7
+   Compiling dpi v0.1.2
+   Compiling once_cell v1.21.4
+   Compiling idna_adapter v1.2.2
+   Compiling idna v1.1.0
+   Compiling serde_json v1.0.154
+   Compiling wry v0.48.1
+   Compiling raw-window-handle v0.6.2
+   Compiling bytes v1.12.2
+   Compiling lazy_static v1.5.1
+   Compiling log v0.4.35
+   Compiling url v2.5.9
+   Compiling http v1.5.0
+   Compiling crossbeam-channel v0.5.17
+   Compiling parking_lot v0.12.5
+   Compiling bitflags v2.13.2
+   Compiling memchr v2.8.3
+   Compiling unicode-segmentation v1.13.3
+   Compiling dunce v1.0.5
+   Compiling hound v3.5.1
+   Compiling base64 v0.22.1
+   Compiling shine-rs v0.1.5
+   Compiling tao v0.31.1
+   Compiling webview2-com v0.34.0
+   Compiling ytm-radio v0.1.0 (D:\a\ytm-radio-cyberpunk\ytm-radio-cyberpunk)
+warning: use of deprecated method `std::sync::atomic::Atomic::<u32>::fetch_update`: renamed to `try_update` for consistency
+   --> src\stream.rs:151:45
+    |
+151 |         if let Ok(frame) = self.fade_frames.fetch_update(Ordering::Relaxed, Ordering::Relaxed, step) {
+    |                                             ^^^^^^^^^^^^
+    |
+    = note: `#[warn(deprecated)]` on by default
+help: replace the use of the deprecated method
+    |
+151 -         if let Ok(frame) = self.fade_frames.fetch_update(Ordering::Relaxed, Ordering::Relaxed, step) {
+151 +         if let Ok(frame) = self.fade_frames.try_update(Ordering::Relaxed, Ordering::Relaxed, step) {
+    |
+
+warning: `ytm-radio` (bin "ytm-radio" test) generated 1 warning (run `cargo fix --bin "ytm-radio" -p ytm-radio --tests` to apply 1 suggestion)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1m 15s
+     Running unittests src\main.rs (target\debug\build\ytm-radio/ae4dabba676cbb36\out\ytm_radio-ae4dabba676cbb36.exe)
+
+running 12 tests
+test stream::tests::fade_curve_starts_silent_ends_full_and_never_dips ... ok
+test stream::tests::busy_port_is_reported_not_fatal ... ok
+test stream::tests::connecting_restarts_the_fade ... ok
+test stream::tests::framer_resyncs_after_garbage_and_split_headers ... ok
+test stream::tests::pop_frame_fades_in_and_a_new_listener_fades_in_again ... ok
+test stream::tests::framer_recuts_misaligned_encoder_output_into_whole_frames ... ok
+test stream::tests::listener_count_follows_connections ... ok
+test stream::tests::push_live_never_blocks_and_keeps_the_newest_samples_in_pairs ... ok
+test stream::tests::preroll_is_whole_valid_frames ... ok
+test stream::tests::preroll_comes_first_on_the_wire ... ok
+test stream::tests::every_client_starts_on_a_frame_header_whenever_it_joins ... ok
+test stream::tests::serves_mp3 ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.32s
+
