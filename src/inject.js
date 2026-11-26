@@ -185,12 +185,34 @@
   // "Start a mix": the same as "Start radio" on the song that is playing. YouTube Music's song mix is the playlist
   // "RDAMVM" + the video id; opening that watch address starts it. The page reloads, which is why autoplay is
   // remembered (sessionStorage) and played again after the reload.
+  const VIDEO_ID = /^[A-Za-z0-9_-]{6,20}$/;
+
+  // The id of the song that is playing. The address bar only has it ("watch?v=") while the now-playing screen is
+  // open, so the player itself is asked first; the address and the queue are fallbacks. Returns { id, how } or null.
+  function currentVideoId() {
+    const tries = [
+      ['player', () => document.getElementById('movie_player').getVideoData().video_id],
+      ['address', () => new URLSearchParams(location.search).get('v')],
+      ['queue', () => document.querySelector('ytmusic-player-queue-item[selected]').data.videoId],
+    ];
+    for (const [how, get] of tries) {
+      try {
+        const id = get();
+        if (typeof id === 'string' && VIDEO_ID.test(id)) return { id, how };
+      } catch (e) { /* this source is not available on this page: try the next */ }
+    }
+    return null;
+  }
+
   function startMix() {
-    const id = new URLSearchParams(location.search).get('v');
-    if (!id || !/^[A-Za-z0-9_-]{6,20}$/.test(id)) {
-      post('L:mix: no song in the address (play a song first)');
+    const found = currentVideoId();
+    if (!found) {
+      post('L:mix: cannot find the id of the song that is playing (page ' + location.pathname + ', player ' +
+        (document.getElementById('movie_player') ? 'found' : 'missing') + ')');
       return;
     }
+    const id = found.id;
+    post('L:mix: song id taken from the ' + found.how);
     try { sessionStorage.setItem(AUTOPLAY_KEY, String(Date.now())); } catch (e) { /* ignore */ }
     post('L:starting a mix from ' + id);
     location.assign('https://music.youtube.com/watch?v=' + id + '&list=RDAMVM' + id);
