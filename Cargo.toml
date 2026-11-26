@@ -1,0 +1,19 @@
+[package]
+name = "ytm-radio"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[dependencies]
+log = "0.4"
+# Pure-Rust MP3 encoder (LGPL-2.0), same version Spot On Radio uses.
+shine-rs = "=0.1.5"
+serde_json = "1"
+base64 = "0.22"
+# Window + embedded Edge (WebView2) that shows YouTube Music.
+wry = "0.48"
+tao = "0.31"
+
+[profile.release]
+opt-level = 3
+lto = "thin"

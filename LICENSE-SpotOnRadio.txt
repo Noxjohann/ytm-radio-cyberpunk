@@ -1,0 +1,22 @@
+SPOT ON RADIO LICENSE
+
+Copyright (c) 2026 Sz4bcsi (SZ4)
+
+You may do anything you want with this software and its documentation (the "Software"): use it, copy it,
+change it, build on it, publish it, sell it, and include it in your own projects, private or commercial, in
+source or compiled form, at no cost.
+
+The one condition is credit. Anything you distribute or publish that contains the Software or a substantial
+part of it must name its creator as "Sz4bcsi" or "SZ4" (for example: "Based on Spot On Radio by Sz4bcsi"),
+somewhere users can read it: a readme, credits, a mod page or an about screen.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
+TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+THE CREATOR BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY ARISING FROM THE SOFTWARE OR ITS USE.
+
+Third-party components (librespot, red4ext-rs, tokio, shine-rs and others) keep their own licences. This
+licence does not change them; see red4ext/plugins/SpotOnRadio/THIRD-PARTY-NOTICES.txt.
+
+---
+This file is the licence of the Spot On Radio code that YTM Radio is based on (the MP3 stream server in
+src/stream.rs and the RadioExt keep-alive logic in the CET mod). YTM Radio is based on Spot On Radio by Sz4bcsi.
