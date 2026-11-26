@@ -19,8 +19,8 @@ Music and its sound plays on the RadioExt station **54.5 YTM Radio**, with Artis
 - **Mix button:** starts a YouTube Music mix from the song that is playing.
 
 ### Install
-Needs Windows 10/11 (WebView2), Cyberpunk 2077, **Cyber Engine Tweaks** and **RadioExt** (no RED4ext, Redscript or
-Codeware). Download `YtmRadio-v0.1.0.zip`, copy its `bin` folder into the game folder, run
+Needs Windows 10/11 (WebView2), Cyberpunk 2077, **Cyber Engine Tweaks** and **RadioExt** (YTM Radio itself adds no
+RED4ext, Redscript or Codeware plugin; RadioExt has its own requirements). Download `YtmRadio-v0.1.0.zip`, copy its `bin` folder into the game folder, run
 `mods/YtmRadio/ytm-radio.exe`, and tune to **54.5 YTM Radio**. Windows may warn about an unsigned file the first
 time: **More info > Run anyway**. Full instructions are in the README.
 

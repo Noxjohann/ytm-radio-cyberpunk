@@ -14,7 +14,8 @@ LGPL notice (shine-rs): the complete corresponding source of this program, inclu
 repository this file ships from. You may modify shine-rs (or replace it with another version) and rebuild
 with `cargo build --release`.
 
-Required, installed separately: Cyber Engine Tweaks and RadioExt (by keanuWheeze). RED4ext is not needed.
+Required, installed separately: Cyber Engine Tweaks (by yamashi) and RadioExt (by keanuWheeze). YTM Radio itself
+adds no RED4ext plugin (RadioExt has its own requirements).
 Nothing of RadioExt is included or modified; the CET script only calls it at run time.
 YTM Radio shows the YouTube Music web player in its own window; it is not affiliated with or endorsed by
 Google, YouTube or CD PROJEKT RED.

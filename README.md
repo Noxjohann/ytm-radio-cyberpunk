@@ -20,7 +20,7 @@ in-game radio (RadioExt)" mod. From it I took the MP3 stream server and the Radi
 logic, and replaced the Spotify side with YouTube Music. Spot On Radio's licence asks for credit to its creator,
 and this is that credit: **go and endorse the original.** The licence text is in `LICENSE-SpotOnRadio.txt`.
 
-Also required (not included, not modified): **Cyber Engine Tweaks** and **RadioExt** by keanuWheeze.
+Also required (not included, not modified): **Cyber Engine Tweaks** by yamashi and **RadioExt** by keanuWheeze.
 
 ## What it does
 
@@ -42,7 +42,8 @@ Also required (not included, not modified): **Cyber Engine Tweaks** and **RadioE
 
 - Windows 10 or 11 (the player uses Microsoft Edge WebView2, already installed on nearly every PC).
 - Cyberpunk 2077 with **Cyber Engine Tweaks** and **RadioExt**.
-- RED4ext, Redscript and Codeware are **not** needed.
+- YTM Radio itself adds no RED4ext, Redscript or Codeware plugin and needs none of them. (RadioExt has its own
+  requirements, such as RED4ext: follow the instructions on its page.)
 
 ## Install
 
