@@ -5,7 +5,7 @@ edition = "2021"
 publish = false
 
 [dependencies]
-log = "0.4"
+log = { version = "0.4", features = ["std"] }
 # Pure-Rust MP3 encoder (LGPL-2.0), same version Spot On Radio uses.
 shine-rs = "=0.1.5"
 serde_json = "1"

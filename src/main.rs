@@ -226,7 +226,7 @@ fn main() {
     let mut web_context = WebContext::new(Some(profile));
 
     let (ipc_pcm, ipc_song) = (pcm.clone(), song.clone());
-    let webview = WebViewBuilder::new_with_web_context(&mut web_context)
+    let webview = WebViewBuilder::with_web_context(&mut web_context)
         .with_url(START_URL)
         .with_initialization_script(INJECT)
         .with_ipc_handler(move |req| handle_ipc(req.body(), &ipc_pcm, &ipc_song))
