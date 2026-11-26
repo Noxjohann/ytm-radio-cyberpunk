@@ -9,11 +9,6 @@
 //   "L:<text>"                                                               log line
 (function () {
   'use strict';
-  if (window.top !== window.self) return;
-  if (!/(^|\.)music\.youtube\.com$/.test(location.hostname)) return;
-  if (window.__ytmRadioLoaded) return;
-  window.__ytmRadioLoaded = true;
-
   const post = (s) => {
     try { window.ipc.postMessage(s); } catch (e) { /* app not listening: ignore */ }
   };
@@ -21,6 +16,8 @@
   // While a song plays YouTube Music asks "Leave site?" (a beforeunload handler) before the page may reload, which
   // would hold up the mix reload with a dialog nobody sees in the game. This runs before the page's own scripts, so
   // their beforeunload handlers are simply never registered. (The app window closes through the app, not the page.)
+  // It runs in EVERY frame, before the checks below: the browser asks each frame of the page (embedded frames
+  // too) whether it may be left, and one frame that says no is enough to show the dialog.
   let unloadPatch = 'not applied';
   let unloadBlocked = 0;
   try {
@@ -38,6 +35,17 @@
   } catch (e) {
     unloadPatch = 'failed: ' + e; // the dialog may appear, nothing else breaks
   }
+
+  if (window.top !== window.self) {
+    // An embedded frame: nothing else to do here, but say what its patch did (shows up in the log).
+    setTimeout(() => {
+      post('L:frame ' + location.hostname + ': beforeunload patch ' + unloadPatch + ', ' + unloadBlocked + ' handler(s) blocked');
+    }, 4000);
+    return;
+  }
+  if (!/(^|\.)music\.youtube\.com$/.test(location.hostname)) return;
+  if (window.__ytmRadioLoaded) return;
+  window.__ytmRadioLoaded = true;
 
   // ------------------------------------------------------------ loudness leveler
   // Songs on YouTube Music differ a lot in loudness. The leveler measures how loud the music is (RMS, followed
